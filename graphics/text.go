@@ -37,7 +37,6 @@ func (g *graphics) DrawText(p image.Point, s string) graph.Graphics {
 
 	pt := image.Point{}
 	for _, c := range s {
-		fmt.Printf("%3d %c %v\n", c, c, pt)
 		pt = g.font.DrawRune(ti, pt, c)
 	}
 
