@@ -24,3 +24,16 @@ func DuplicateImage(img image.Image) Image {
 	draw.Draw(dst, img.Bounds(), img, image.Point{}, draw.Src)
 	return dst
 }
+
+type wrapper struct {
+	img image.Image
+}
+
+func (w *wrapper) ColorModel() color.Model     { return w.img.ColorModel() }
+func (w *wrapper) Bounds() image.Rectangle     { return w.Bounds() }
+func (w *wrapper) At(x, y int) color.Color     { return w.At(x, y) }
+func (w *wrapper) Set(x, y int, c color.Color) {}
+
+func Imutable(img image.Image) Image {
+	return &wrapper{img: img}
+}
