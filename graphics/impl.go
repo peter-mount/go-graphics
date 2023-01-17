@@ -29,30 +29,6 @@ type graphics struct {
 	fontSize   float64
 }
 
-func (g *graphics) Image() graph.Image {
-	return g.img
-}
-
-func (g *graphics) Bounds() image.Rectangle {
-	return g.bounds
-}
-
-func (g *graphics) Top() int {
-	return g.bounds.Min.Y
-}
-
-func (g *graphics) Left() int {
-	return g.bounds.Min.X
-}
-
-func (g *graphics) Width() int {
-	return g.bounds.Dx()
-}
-
-func (g *graphics) Height() int {
-	return g.bounds.Dy()
-}
-
 func (g *graphics) Foreground(col color.Color) graph.Graphics {
 	g.foreground = col
 	return g
@@ -67,8 +43,17 @@ func (g *graphics) Filter(filter graph.Filter) error {
 	return filter.DoOver(g.img)
 }
 
+func (g *graphics) FilterBounds(filter graph.Filter, bounds image.Rectangle) error {
+	return filter.Do(g.img, g.img, bounds)
+}
+
 func (g *graphics) Map(mapper graph.Mapper) graph.Graphics {
 	mapper.DoOver(g.img)
+	return g
+}
+
+func (g *graphics) MapBounds(mapper graph.Mapper, bounds image.Rectangle) graph.Graphics {
+	mapper.Do(g.img, g.img, bounds)
 	return g
 }
 

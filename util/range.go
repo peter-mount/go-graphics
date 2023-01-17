@@ -85,3 +85,17 @@ func LimitU16(d int) uint16 {
 func LimitU32(d int) uint32 {
 	return uint32(LimitU16(d))
 }
+
+func Min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
+}
+
+func Max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}

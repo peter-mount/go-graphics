@@ -26,6 +26,12 @@ type Graphics interface {
 	WritePNG(n string) error
 	WriteJPG(n string) error
 
+	// Expand an image
+	Expand(top, left, bottom, right int) Graphics
+
+	// Crop an image
+	Crop(bounds image.Rectangle) Graphics
+
 	Plot(x, y int) Graphics
 	PlotPoint(p image.Point) Graphics
 
@@ -47,9 +53,11 @@ type Graphics interface {
 
 	// Filter applies a filter against the entire image being drawn
 	Filter(filter Filter) error
+	FilterBounds(filter Filter, bounds image.Rectangle) error
 
 	// Map applies a Mapper against the entire image being drawn
 	Map(mapper Mapper) Graphics
+	MapBounds(mapper Mapper, bounds image.Rectangle) Graphics
 
 	// Model applies a color.Model against the entire image being drawn
 	Model(model color.Model) Graphics
